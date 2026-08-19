@@ -131,6 +131,27 @@
 
 ---
 
+## 🎁 BONUS — Kết quả thực nghiệm
+
+### A — Local/Global Query Router
+`route_query()` chạy trên toàn bộ 50 câu Golden Dataset: **49 câu → local** (đồ thị chi tiết), **1 câu → global** (community report). Hợp lý vì phần lớn câu hỏi trong bộ golden (factoid/multi-hop) hỏi về thực thể/quan hệ cụ thể — chỉ 1 câu đủ mang tính tổng hợp/vĩ mô để cần tầng community.
+
+### B — Global Search via Community Reports
+`build_communities()` (NetworkX `greedy_modularity_communities`) phát hiện **78 community** trên đồ thị 390 nodes/281 edges; sau lọc `min_size≥3` còn **76 community** được LLM tóm tắt thành report riêng (ví dụ: *"L&T Technology Services Limited has developed advanced technologies and Engineering Research and Development services..."*). Demo `answer_global()` trên câu hỏi đầu tiên (G5000-01, về giao dịch Aeris–Ericsson) cho kết quả đáng chú ý: model trả lời **"evidence is insufficient"** — đúng dự đoán, vì câu hỏi này thuộc loại chi tiết/multi-hop nên tầng community report (tóm tắt ở mức thô) không đủ để trả lời chính xác, càng củng cố lý do cần có Router (mục A) để tránh route nhầm các câu chi tiết sang tầng global.
+
+### C — Self-Correction Graph Retrieval
+Chạy `self_correcting_context()` trên mẫu 20 câu đầu Golden Dataset:
+
+| Route | Số câu | Tỷ lệ |
+|---|---|---|
+| `hop2` (đủ ngay) | 7 | 35% |
+| `hop3` (chỉ riêng hop3 là đủ) | 0 | 0% |
+| `hop3+vector` (phải fallback vector) | 13 | 65% |
+
+**Định lượng trước/sau:** Nếu chỉ dùng baseline hop2 cố định (không có self-correction), **65% câu hỏi trong mẫu sẽ thiếu context**. Quan sát thú vị: không có câu nào dừng lại đúng ở mức hop3 — mọi trường hợp hop2 không đủ đều phải tiếp tục fallback sang vector, cho thấy ở scale đồ thị hiện tại (281 edges, thưa), riêng việc mở rộng thêm 1 hop không đủ bù đắp — bằng chứng thêm cho luận điểm ở mục 4 (Phần 1): đồ thị cần dày hơn đáng kể để GraphRAG thuần phát huy hết giá trị; self-correction với vector fallback là cơ chế bù đắp cần thiết ở scale nhỏ.
+
+---
+
 ## 🎯 TỰ ĐÁNH GIÁ
 | Tiêu chí | Điểm tự chấm (1–5) | Ghi chú |
 |----------|-------------------|---------|
