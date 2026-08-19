@@ -44,8 +44,8 @@
 ## 🛡️ Scale Guard (Giới hạn dữ liệu trong giờ Lab)
 
 Để hoàn thành toàn bộ pipeline trong 120 phút mà không gặp lỗi rate-limit hay OOM (Out-of-Memory):
-- `LAB_MAX_ARTICLES = 1500` (Tối đa 1500 bài viết được đưa vào xử lý)
-- `LAB_MAX_CHUNKS = 3000` (Tối đa 3000 chunk cho Flat RAG Vector Index)
+- `LAB_MAX_ARTICLES = 5000` (Tối đa 5000 bài viết được đưa vào xử lý — nâng từ 1500 vì bộ Golden Dataset 50 câu có sẵn tham chiếu evidence rows tới index 4997, lấy theo 5000 dòng đầu chứ không random-sample)
+- `LAB_MAX_CHUNKS = 8000` (Tối đa 8000 chunk cho Flat RAG Vector Index)
 - `EXTRACTION_MAX_CHUNKS = 400` (Tối đa 400 chunk gửi qua LLM để trích xuất Knowledge Graph)
 - `CHUNK_WORDS = 220`, `CHUNK_OVERLAP_WORDS = 40`
 
@@ -214,7 +214,7 @@ Day19-Track3-GraphRAG/
 - [ ] Chạy hoàn tất LLM Judge và xuất đủ 2 file CSV vào thư mục `outputs/`.
 - [ ] Đã hoàn thành đầy đủ cả 2 phần trong file báo cáo `reports/lab_report.md`.
 - [ ] Push toàn bộ repo lên GitHub và nộp đường link.
-�� (Action Plan)
+�� (Action Plan)
 - Đồ án của bạn có cần đến GraphRAG không, hay Flat RAG / Hybrid RAG là đủ?
 - Nếu áp dụng GraphRAG, cấu trúc Node/Relation của bài toán bạn là gì?
 - Chiến lược giải quyết Entity Resolution và Super-node trong bài toán cụ thể của bạn.

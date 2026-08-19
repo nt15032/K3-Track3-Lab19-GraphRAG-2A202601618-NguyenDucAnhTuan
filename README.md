@@ -65,10 +65,10 @@ NEO4J_PASSWORD=<your-password>
 NEO4J_DATABASE=neo4j
 
 GROQ_API_KEY=gsk_...
-GROQ_MODEL=llama-3.3-70b-versatile
+GROQ_MODEL=openai/gpt-oss-120b      # Groq đã ngừng cung cấp llama-3.3-70b-versatile
 
 JUDGE_PROVIDER=openai               # 'openai' hoặc 'groq'
-JUDGE_MODEL=gpt-4o-mini             # hoặc llama-3.3-70b-versatile
+JUDGE_MODEL=gpt-4o-mini             # hoặc openai/gpt-oss-120b (nếu JUDGE_PROVIDER=groq)
 OPENAI_API_KEY=sk-...
 
 HF_TOKEN=hf_...                     # Hugging Face User Access Token
@@ -119,8 +119,8 @@ jupyter lab Day19_GraphRAG_vs_FlatRAG_Production_Lab_Guide.ipynb
 ## 🛡️ Scale Guard (Quy tắc an toàn dữ liệu trong Lab)
 
 Trong thời lượng 2 giờ, để tránh cạn kiệt rate limit hoặc tràn bộ nhớ:
-- `LAB_MAX_ARTICLES = 1500` (Số bài báo tối đa)
-- `LAB_MAX_CHUNKS = 3000` (Số chunk văn bản tối đa)
+- `LAB_MAX_ARTICLES = 5000` (Số bài báo tối đa — nâng từ 1500 để phủ hết evidence rows của `data/graphrag_golden_50_first5000.csv`, đánh index theo 5000 dòng đầu)
+- `LAB_MAX_CHUNKS = 8000` (Số chunk văn bản tối đa)
 - `EXTRACTION_MAX_CHUNKS = 400` (Số chunk trích xuất đồ thị)
 - `CHUNK_WORDS = 220`, `CHUNK_OVERLAP_WORDS = 40`
 
