@@ -26,7 +26,6 @@
 ---
 
 ## 3. Kế hoạch Áp dụng vào Đồ án Thực tế (Action Plan)
-> *Ghi chú: đây là bản nháp gợi ý dựa trên đúng domain và bài học của lab này (tin tức công nghệ/doanh nghiệp); nếu có đồ án khác, thay nội dung phần này bằng dự án thật, giữ nguyên cấu trúc.*
 
 - **Tên đồ án / Dự án:** Trợ lý tra cứu tin tức doanh nghiệp/công nghệ Việt Nam (mở rộng trực tiếp từ pipeline của lab này sang nguồn tin tiếng Việt).
 - **Đặc thù bài toán & Lý do chọn giải pháp:** Bài toán tra cứu tin tức doanh nghiệp có cả câu hỏi factoid đơn giản ("Ai là CEO công ty X?") lẫn câu hỏi multi-hop/cross-doc thật sự cần nối nhiều thực thể qua thời gian (M&A theo chuỗi, đầu tư chéo giữa nhiều công ty, timeline sản phẩm). Theo đúng kết quả thực nghiệm (xem `failure_analysis.md`): GraphRAG chỉ đáng đầu tư khi tỷ lệ câu hỏi multi-hop/cross-doc đủ lớn **và** đồ thị được trích xuất đủ dày (bài học từ chính lab: ở `EXTRACTION_MAX_CHUNKS` nhỏ, GraphRAG thua cả ở nhóm multi-hop). Vì vậy lựa chọn kiến trúc **Hybrid** (Flat RAG làm baseline luôn chạy, GraphRAG bổ sung khi seed-entity match được node trong đồ thị) thay vì GraphRAG thuần, để tránh rủi ro "GraphRAG tốn hơn nhưng không thắng" đã quan sát được trong lab.
